@@ -4,10 +4,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
+import java.io.FileReader;
 import java.io.IOException;
 
 
-public class LoginController {
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+
+public class LoginController{
 
     public LoginController() {
     }
@@ -23,20 +30,37 @@ public class LoginController {
 
     public void checkLogin() throws IOException {
 
-       // LoginApplication main = new LoginApplication();
+        LoginApplication main = new LoginApplication();
+        JSONParser parser = new JSONParser();
+        try (FileReader reader = new FileReader("C:\\Users\\admin\\Desktop\\Brief3\\src\\main\\resources\\com\\example\\brief3\\json\\fanctionnaire.json")) {
+            //Read JSON file
+            Object obj = parser.parse(reader);
 
-        if (this.email.getText().toString().equals("admin") && this.password.getText().toString().equals("admin")) {
-            //System.out.println("Login Successful");
-            wrong.setText("Login Successful");
+            JSONArray funList = (JSONArray) obj;
+            System.out.println(funList);
+
+            for(int i = 0; i < funList.size(); i++) {
+                JSONObject fonctionnaire = (JSONObject) funList.get(i);
+                String email = (String) fonctionnaire.get("email");
+                String password = (String) fonctionnaire.get("password");
+
+                if((this.email.getText().isEmpty() || this.password.getText().isEmpty())){
+                    wrong.setText("Please enter your email and password");
+                    break;
+                } else if (email.equals(this.email.getText()) && password.equals(this.password.getText())){
+                    wrong.setText("Success!");
+                    main.chaneScene("dashboard.fxml");
+                    break;
+                } else {
+                    wrong.setText("Wrong email or password");
+                }
+            }
+        }catch (Exception e) {
+            e.printStackTrace();
         }
-        else if (this.email.getText().isEmpty() || this.password.getText().isEmpty()) {
-            //System.out.println("Please enter your email and password");
-            wrong.setText("Please enter your email and password");
-        }
-        else {
-            //Alert alert = new Alert(Alert.AlertType.ERROR);
-            wrong.setText("Wrong password or email");
-        }
+
+
+
 
 
     }

@@ -26,10 +26,7 @@ public class LoginApplication extends Application {
         Parent root = FXMLLoader.load(getClass().getResource(fxml));
         stg.setScene(new Scene(root));
     }
-    public void showMain() throws IOException {
 
-        System.out.println("sucees");
-    }
     public static void main(String[] args) {
         launch();
     }
