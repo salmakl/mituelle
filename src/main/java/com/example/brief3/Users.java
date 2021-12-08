@@ -1,5 +1,6 @@
 package com.example.brief3;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 public class Users {
@@ -7,19 +8,19 @@ public class Users {
     private String lname;
     private String mail;
     private String adress;
-    private Date date;
+    private LocalDate date;
     private String phone;
-    private String cin;
+    private String id;
     private String company;
 
-    public Users(String fname, String lname, String mail, String adress, Date date, String phone, String cin, String company) {
+    public Users(String fname, String lname, String mail, String adress, LocalDate date, String phone, String id, String company) {
         this.fname = fname;
         this.lname = lname;
         this.mail = mail;
         this.adress = adress;
         this.date = date;
         this.phone = phone;
-        this.cin = cin;
+        this.id = id;
         this.company = company;
     }
 
@@ -58,11 +59,11 @@ public class Users {
         this.adress = adress;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
@@ -74,12 +75,12 @@ public class Users {
         this.phone = phone;
     }
 
-    public String getCin() {
-        return cin;
+    public String getId() {
+        return id;
     }
 
-    public void setCin(String cin) {
-        this.cin = cin;
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getCompany() {
