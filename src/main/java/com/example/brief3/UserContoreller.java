@@ -6,7 +6,11 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
+import java.io.FileReader;
 import java.net.URL;
 import java.util.*;
 import java.util.regex.Matcher;
@@ -61,6 +65,9 @@ public class UserContoreller implements Initializable {
 
     @FXML
     private Label eAddress;
+
+    @FXML
+    private ChoiceBox<String> country = new ChoiceBox<String>();
     @FXML
     private TableColumn<Users, String> cAdress;
 
@@ -149,7 +156,7 @@ public class UserContoreller implements Initializable {
             error = true;
         } else {
             this.ePhone.setText("");
-            user.setPhone(this.phone.getText() + "" + this.phone.getText());
+            user.setPhone(this.country.getSelectionModel().getSelectedItem() + "" + this.phone.getText());
         }
 
         if (this.mail.getText().isEmpty() || !me.matches()) {
@@ -201,12 +208,11 @@ public class UserContoreller implements Initializable {
     }
 
 
-    public void show() {
 
-    }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
         comp.setCellValueFactory(new PropertyValueFactory<Users, String>("company"));
         cId.setCellValueFactory(new PropertyValueFactory<Users, String>("id"));
         cPhone.setCellValueFactory(new PropertyValueFactory<Users, String>("phone"));
@@ -217,5 +223,24 @@ public class UserContoreller implements Initializable {
         cDate.setCellValueFactory(new PropertyValueFactory<Users, Date>("date"));
 
         table.setItems(list);
+
+        JSONParser parser = new JSONParser();
+        try (FileReader reader = new FileReader("C:\\Users\\admin\\Desktop\\Brief3\\src\\main\\resources\\com\\example\\brief3\\json\\ref.json")){
+            //Read JSON file
+            Object obj = parser.parse(reader);
+
+            JSONArray list = (JSONArray) obj;
+
+            for (Object o : list) {
+                JSONObject country_obj = (JSONObject) o;
+                String country_code = (String) country_obj.get("dial_code");
+
+                country.getItems().add(country_code);
+            }
+
+
+    }catch (Exception e){
+            e.printStackTrace();
+        }
     }
 }

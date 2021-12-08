@@ -37,7 +37,7 @@ public class LoginController{
             Object obj = parser.parse(reader);
 
             JSONArray funList = (JSONArray) obj;
-            System.out.println(funList);
+            //System.out.println(funList);
 
             for(int i = 0; i < funList.size(); i++) {
                 JSONObject fonctionnaire = (JSONObject) funList.get(i);
